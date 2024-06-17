@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "415627597609",
+    "project_id": "dreamtact",
+    "storage_bucket": "dreamtact.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415627597609:android:53223d6ae489fd03c8c938",
+        "android_client_info": {
+          "package_name": "com.example.app_dreamtact"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEQTMLVSF3LqhoWlcjlusYJF2jIXY7-o8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415627597609:android:c230ce492d7dbfd8c8c938",
+        "android_client_info": {
+          "package_name": "com.example.app_flutter_dreamtact"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEQTMLVSF3LqhoWlcjlusYJF2jIXY7-o8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
