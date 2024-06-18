@@ -204,3 +204,8 @@ Future<void> updateProfile(data) async {
     print('Error al actualizar el documento: $e');
   }
 }
+
+Future<void> logout() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('cedula');
+}

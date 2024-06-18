@@ -110,6 +110,17 @@ class CustomDrawer extends StatelessWidget {
                   Navigator.pushNamed(context, '/add');
                 },
               ),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app,
+                    color: Color(0xFF2C3E50)), // Icono Azul Marino
+                title: const Text('Cerrar sesion',
+                    style: TextStyle(
+                        color: Color(0xFF2C3E50))), // Texto Azul Marino
+                onTap: () {
+                  logout();
+                  Navigator.pushNamed(context, '/login');
+                },
+              ),
               // ListTile(
               //   leading: const Icon(Icons.settings,
               //       color: Color(0xFF2C3E50)), // Icono Azul Marino

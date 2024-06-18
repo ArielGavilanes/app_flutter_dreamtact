@@ -83,8 +83,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    width: 150,
-                    height: 150,
+                    width: 800,
+                    height: 120,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.transparent,
@@ -93,17 +93,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Image.asset(
                         'assets/images/logo.png',
                         fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    bottom: 0.0,
-                    child: Text(
-                      'DreamTact',
-                      style: TextStyle(
-                        color: Color(0xFF2C3E50), // Azul Marino
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
