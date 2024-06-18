@@ -108,6 +108,14 @@ class _AddContactPageState extends State<AddContactPage> {
                   if (value == null || value.isEmpty) {
                     return 'Por favor ingrese el email';
                   }
+
+                  RegExp emailRegExp =
+                      RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+                  if (!emailRegExp.hasMatch(value)) {
+                    return 'Por favor ingrese un email válido';
+                  }
+
                   return null;
                 },
               ),
@@ -139,6 +147,11 @@ class _AddContactPageState extends State<AddContactPage> {
                   if (value.length != 10) {
                     return 'El número debe tener exactamente 10 dígitos';
                   }
+                  // Validar que el número sea de Ecuador
+                  RegExp ecuadorPhoneRegExp = RegExp(r'^09[0-9]{8}$');
+                  if (!ecuadorPhoneRegExp.hasMatch(value)) {
+                    return 'Por favor ingrese un número de teléfono válido';
+                  }
                   return null;
                 },
               ),
@@ -162,6 +175,13 @@ class _AddContactPageState extends State<AddContactPage> {
                     ),
                   ),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor ingrese la organizacion';
+                  }
+
+                  return null;
+                },
               ),
               const SizedBox(height: 20),
               ElevatedButton(

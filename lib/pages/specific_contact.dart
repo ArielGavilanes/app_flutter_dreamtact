@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:app_dreamtact/services/firebase_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:app_dreamtact/components/custom_drawer.dart';
 
 class SpecificContactPage extends StatefulWidget {
@@ -236,7 +235,7 @@ class _SpecificContactPageState extends State<SpecificContactPage> {
                   decoration: const InputDecoration(
                     labelText: 'Teléfono',
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.phone,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Por favor ingrese el número';
@@ -244,6 +243,11 @@ class _SpecificContactPageState extends State<SpecificContactPage> {
                     if (value.length != 10) {
                       return 'El número debe tener exactamente 10 dígitos';
                     }
+                    RegExp ecuadorPhoneRegExp = RegExp(r'^09[0-9]{8}$');
+                    if (!ecuadorPhoneRegExp.hasMatch(value)) {
+                      return 'Por favor ingrese un número de teléfono válido';
+                    }
+                    // Aquí podrías añadir más validaciones específicas para el número de teléfono si es necesario
                     return null;
                   },
                 ),
@@ -256,6 +260,12 @@ class _SpecificContactPageState extends State<SpecificContactPage> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Por favor ingresa el correo electrónico';
+                    }
+                    // Validar formato de correo electrónico
+                    RegExp emailRegExp =
+                        RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                    if (!emailRegExp.hasMatch(value)) {
+                      return 'Por favor ingrese un correo electrónico válido';
                     }
                     return null;
                   },

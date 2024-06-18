@@ -172,3 +172,35 @@ Future<void> deleteContact(String id) async {
     print('Error al eliminar el documento: $e');
   }
 }
+
+Future<void> updateProfile(data) async {
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? cedula = prefs.getString('cedula');
+
+    QuerySnapshot<Map<String, dynamic>> queryProfile = await bd
+        .collection('usuarios')
+        .where('cedula', isEqualTo: cedula)
+        .limit(1)
+        .get();
+
+    // QuerySnapshot<Map<String, dynamic>> querySnapshot = await bd
+    //     .collection('contactos')
+    //     .where('id', isEqualTo: id)
+    //     .limit(1)
+    //     .get();
+
+    if (queryProfile.docs.isNotEmpty) {
+      DocumentReference<Map<String, dynamic>> docRef =
+          queryProfile.docs.first.reference;
+
+      await docRef.update(data);
+
+      print('Documento actualizado con éxito.');
+    } else {
+      print('Errr en if');
+    }
+  } catch (e) {
+    print('Error al actualizar el documento: $e');
+  }
+}

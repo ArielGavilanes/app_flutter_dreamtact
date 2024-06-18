@@ -43,9 +43,9 @@ class MyApp extends StatelessWidget {
             },
           );
         }
-        return MaterialPageRoute(
-          builder: (context) => _routes[settings.name]!(context),
-        );
+        // return MaterialPageRoute(
+        //   builder: (context) => _routes[settings.name]!(context),
+        // );
       },
       routes: _routes,
     );

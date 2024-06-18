@@ -16,6 +16,14 @@ class ProfilePage extends StatelessWidget {
         ),
         backgroundColor: const Color(0xFF2C3E50),
         iconTheme: const IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              _showEditModal(context);
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.grey[200],
       body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -36,7 +44,6 @@ class ProfilePage extends StatelessWidget {
           String nombre = userData['nombre'] ?? '';
           String apellido = userData['apellido'] ?? '';
           String cedula = userData['cedula'] ?? '';
-
           String urlFotoPerfil = userData['url_perfil'] ?? '';
 
           return Stack(
@@ -101,6 +108,111 @@ class ProfilePage extends StatelessWidget {
         },
       ),
       drawer: const CustomDrawer(),
+    );
+  }
+
+  void _showEditModal(BuildContext context) {
+    TextEditingController nombreController = TextEditingController(text: '');
+    TextEditingController apellidoController = TextEditingController(text: '');
+    TextEditingController urlFotoController = TextEditingController(text: '');
+
+    final formKey = GlobalKey<FormState>();
+
+    // Obtener datos actuales del perfil y establecer en los controladores
+    getProfile().then((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        Map<String, dynamic> userData = snapshot.docs.first.data();
+        nombreController.text = userData['nombre'] ?? '';
+        apellidoController.text = userData['apellido'] ?? '';
+        urlFotoController.text = userData['url_perfil'] ?? '';
+      }
+    }).catchError((error) {
+      print('Error al obtener datos del perfil: $error');
+      // Manejar el error según sea necesario
+    });
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Editar perfil'),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: nombreController,
+                  decoration: const InputDecoration(labelText: 'Nombre'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingresa un nombre';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: apellidoController,
+                  decoration: const InputDecoration(labelText: 'Apellido'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingresa un apellido';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: urlFotoController,
+                  decoration: const InputDecoration(labelText: 'URL de imagen'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingresa una URL de imagen';
+                    }
+                    // Validación básica de URL
+                    if (!Uri.parse(value).isAbsolute) {
+                      return 'Por favor ingresa una URL válida';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  // Aquí puedes actualizar los datos en Firestore
+                  // Puedes acceder a los valores usando los controllers
+                  var data = {
+                    'nombre': nombreController.text,
+                    'apellido': apellidoController.text,
+                    'url_perfil': urlFotoController.text
+                  };
+
+                  updateProfile(data);
+                  // Ejemplo de cómo actualizar en Firestore (puedes adaptarlo a tu estructura)
+                  // FirebaseFirestore.instance.collection('profiles').doc('documentoID').update({
+                  //   'nombre': nombre,
+                  //   'apellido': apellido,
+                  //   'url_perfil': urlFoto,
+                  // });
+
+                  // Cerrar el modal después de actualizar
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('Guardar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
